@@ -48,3 +48,24 @@ There you will find the interactive Swagger UI documentation, which lets you tes
 - `benchmark.py`: Performance comparison between PyTorch and ONNX Runtime.
 - `Dockerfile`: Instructions for building a lightweight container for the API.
 - `run_pipeline.sh`: Automation script that installs dependencies and runs the pipeline.
+
+## Manual Test
+
+The manual test was performed through the Swagger UI available at `/docs`. The API endpoint `POST /predict` was used with an uploaded image file. The request was sent as `multipart/form-data`, and the service returned a successful response with HTTP status code `200`.
+Model was tested with image of my own car. 
+
+The test result confirmed that the model correctly processed the input image and predicted the car body class as:
+
+- `filename`: `car3.jpg`
+- `predicted_body_type`: `suv`
+
+### Manual Test Evidence
+
+![Swagger UI endpoint](docs_img/test1.jpg)
+
+![Sample input image used for testing](docs_img/car3.jpg)
+
+![Request form and response](docs_img/test2.jpg)
+## Test Summary
+
+The test confirmed that the FastAPI service is working correctly, the ONNX model is being loaded properly, and the `/predict` endpoint returns valid predictions for uploaded images.

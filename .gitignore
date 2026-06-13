@@ -221,4 +221,6 @@ data/
 .idea
 mapping.json
 resnet18.pth
+resnet18.onnx
+resnet18.onnx.data
 results.json

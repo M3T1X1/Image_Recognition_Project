@@ -220,3 +220,5 @@ __marimo__/
 data/
 .idea
 mapping.json
+resnet18.pth
+results.json

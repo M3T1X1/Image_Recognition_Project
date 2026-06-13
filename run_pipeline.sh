@@ -26,4 +26,14 @@ python export_to_onnx.py
 echo -e "\n[6/6] Running benchmarks..."
 python benchmark.py
 
+echo -e "\nDocker Building...."
+sudo docker build --no-cache -t car-classifier-api .
 
+echo -e "\nDocker Running...."
+sudo docker rm -f car-classifier-api || true
+sudo docker run -d -p 8000:8000 --name car-classifier-api car-classifier-api
+
+echo -e "\nDocker container status check..."
+docker ps
+
+echo -e "App launched at http://localhost:8000/docs"

@@ -22,9 +22,12 @@ dataloader = DataLoader(dataset, batch_size=32, shuffle=True)
 
 # downloading the model
 model = models.resnet18(weights = models.ResNet18_Weights.DEFAULT)
+
+for param in model.parameters():
+    param.requires_grad = False
+
 num_features = model.fc.in_features
 num_classes = len(dataset.categories)
-
 model.fc = nn.Linear(num_features, num_classes)
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -34,13 +37,13 @@ print(f"Using device: {device}")
 model = model.to(device)
 
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=0.001)
+optimizer = optim.Adam(model.fc.parameters(), lr=0.001)
 
 epochs = 3
-running_loss = 0
 
 for epoch in range(epochs):
     model.train()
+    running_loss = 0
 
     for inputs, labels in dataloader:
         inputs, labels = inputs.to(device), labels.to(device)
@@ -59,15 +62,7 @@ for epoch in range(epochs):
 
 torch.save(model.state_dict(), 'resnet18.pth')
 
-train_results = {
-    "epochs": epochs,
-    "finall_loss" : running_loss / len(dataloader),
-    "categories" : dataset.categories
-}
 
-with open("results.json", "w") as outfile:
-    json.dump(train_results, outfile, indent=4)
-
-print(f"Training finished, model and results saved.")
+print(f"Training finished, model saved.")
 
 
